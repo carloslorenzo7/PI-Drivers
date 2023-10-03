@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
   sequelize.define('Driver', {
     name: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
   });
 };
