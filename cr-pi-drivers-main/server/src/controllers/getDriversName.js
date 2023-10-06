@@ -2,6 +2,7 @@ const axios = require("axios");
 apiUrl = "http://localhost:5000/drivers";
 LIMIT = 15;
 const { Driver } = require("../db");
+const { Op } = require("sequelize");
 
 const getDriverName = async (req, res) => {
   try {
@@ -11,6 +12,7 @@ const getDriverName = async (req, res) => {
     const response = await axios.get(`${apiUrl}?limit=${LIMIT}`);
     const apiData = response.data;
     //hago un filter para filtrar por nombre la data recibida
+    //!buscar simplificar esta linea
     const apiFiltered = apiData.filter((driver) => {
       const driverName = `${driver.name.forename} ${driver.name.surname}`;
       return driverName.toLowerCase().includes(name.toLowerCase());
@@ -23,7 +25,7 @@ const getDriverName = async (req, res) => {
       const dbFiltered = await Driver.findAll({
         where: {
           name: {
-            [op.iLike]: `%${name}%`, // no discrimina entre mayusculas y minusculas
+            [Op.iLike]: `%${name}%`, // no discrimina entre mayusculas y minusculas
           },
         },
       });
