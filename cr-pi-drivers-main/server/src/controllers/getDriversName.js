@@ -1,25 +1,53 @@
 const axios = require("axios");
 apiUrl = "http://localhost:5000/drivers";
 LIMIT = 15;
-const { Driver } = require("../db");
+const { Driver, Team } = require("../db");
 const { Op } = require("sequelize");
+const { defaultImage } = require("../utils/defaultImage.js");
 
 const getDriverName = async (req, res) => {
   try {
     //solicito por query
     const { name } = req.query;
-
-    const response = await axios.get(`${apiUrl}?limit=${LIMIT}`);
+    // hago solicitud a la api
+    const response = await axios.get(`${apiUrl}`);
     const apiData = response.data;
-    //hago un filter para filtrar por nombre la data recibida
-    //!buscar simplificar esta linea
-    const apiFiltered = apiData.filter((driver) => {
-      const driverName = `${driver.name.forename} ${driver.name.surname}`;
-      return driverName.toLowerCase().includes(name.toLowerCase());
-    });
+  
+
     
-    if (apiFiltered.length > 0) {
-      res.status(200).json(apiFiltered);
+    //filtro para hacer busqueda insensible de mayuscula o minuscula y que me mande los posibles nombres que tengas las iniciales brindadas
+    const apiFilter= apiData.filter((driver)=> //driver.name.forename.toLowerCase().startsWith(name.toLowerCase()) version si quiero como tenia antes descomentar linea  
+    {
+      
+      
+       const forenameMatch= driver.name.forename.toLowerCase().startsWith(name.toLowerCase())
+       const surnameMatch = driver.name.surname.toLowerCase().startsWith(name.toLowerCase());
+        return forenameMatch || surnameMatch;
+      
+      })
+   
+   
+  const limitApi=apiFilter.slice(0,15).map((driver)=>({
+    // cambie estructura a como llega en la api 
+    id: driver.id,
+    name: {
+      forename: driver.name.forename,
+      surname: driver.name.surname,
+    },
+    description: driver.description,
+    nationality: driver.nationality,
+    dob: driver.dob,
+    image: {
+      url: driver.image.url, 
+    },
+    teams: driver.teams,
+  }));
+console.log("limitApi:", limitApi);
+
+
+
+    if (limitApi.length > 0) {
+      res.status(200).json(limitApi);
     } else {
         //consulta a la base de datos por nombre 
       const dbFiltered = await Driver.findAll({
@@ -28,6 +56,8 @@ const getDriverName = async (req, res) => {
             [Op.iLike]: `%${name}%`, // no discrimina entre mayusculas y minusculas
           },
         },
+        limit:15,
+        include:{model:Team},attributes: ["name"]
       });
       if (dbFiltered.length > 0) {
         res.status(200).json(dbFiltered);

@@ -1,35 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+//! Este modulo es la raiz de la aplicacion
+import "./App.css";
+import { useLocation } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
+import NavBar from "./Components/NavBar/NavBar";
+import Landing from "./Views/Landing/Landing";
+import Home from "./Views/Home/Home";
+import Detail from "./Views/Detail/Detail";
+import Form from "./Views/Form/Form";
 
+
+
+// defino las rutas para las vistas principales 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  const location = useLocation();
+     return (
+    <div>
+       { /*  location.pathname para omitir la nav bar en el landing y que aparerezca en el resto de las pestañas*/ }
+       {location.pathname !== "/" && <NavBar/>} 
+      <Routes>
+        <Route path="/" element={<Landing/>}/>
+        <Route path="/home" element={<Home/>}/>
+        <Route path="/detail/:id" element={<Detail/>}/>
+        <Route path="/create" element={<Form/>}/>
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;

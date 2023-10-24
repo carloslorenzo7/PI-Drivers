@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+  }
+  
+  a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+  
+  select {
+    padding: 5px;
+    border: none;
+    background-color: #444;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  label {
+    margin-right: 10px;
+  }

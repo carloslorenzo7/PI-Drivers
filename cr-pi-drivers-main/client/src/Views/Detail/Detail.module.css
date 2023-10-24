@@ -1,0 +1,47 @@
+.detail {
+    
+    display: flex;
+  align-items: center;
+  font-family: sans-serif;
+  border: 2px solid #646cffaa;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 1px;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.4);
+  background-color: #171414;
+  gap: 30px; /* Espacio entre la imagen y los detalles */
+    
+}
+
+/* Estilo para el contenedor de detalles del conductor */
+/* Estilo para el contenedor de columnas de detalles */
+.detailColumn {
+    flex: 1;
+    padding: 10px; /* Espaciado interior */
+  color: #ffffff; /* Texto blanco */
+  }
+  
+  /* Estilos para los elementos dentro del contenedor de columnas de detalles */
+  .detailColumn h2 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .detailColumn h4 {
+    font-size: 16px;
+  }
+.img{
+    max-width: 100%; /* Asegura que la imagen no se desborde */
+   width: auto;
+   height: auto;
+}
+/* Estilo para hacer la imagen redonda */
+.img img {
+    border-radius: 10%;
+  }
+  
+  /* Estilo para añadir una transición suave en la imagen */
+  .img img:hover {
+    transform: scale(1.1); /* Aumenta un 10% en tamaño al pasar el mouse */
+    transition: transform 0.3s ease; /* Transición suave durante 0.3 segundos */
+  }

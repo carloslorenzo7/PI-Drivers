@@ -15,15 +15,10 @@ const getDriversId = async (req, res) => {
       // Asignar una imagen por defecto al conductor obtenido por ID si no la tiene
       const driverWithImage = defaultImage(driversData);
 
-      //separaro los teams en un orden mas visible cuando hago solicutd a la api
-      const driverWithTeam = {
-        ...driverWithImage, // Uso driverWithImage en lugar de driverData aquí
-        team: driverWithImage.teams
-          .split(", ")
-          .map((teamName) => ({ name: teamName })),
-      };
 
-      return res.status(200).json(driverWithTeam);
+     
+
+      return res.status(200).json(driverWithImage);
     } else {
       // si el numero no es entero busca en la base de datos
       const dbDriver = await Driver.findByPk(id, {

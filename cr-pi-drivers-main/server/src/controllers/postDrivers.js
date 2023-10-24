@@ -1,11 +1,13 @@
 const { Driver, Team } = require("../db");
+//! verificar si guardo todos los teams de la api en la bdd, para e post si tengo que usar esos o esta bien el codigo como estaba
+
 
 const postDrivers = async (req, res) => {
   const { forename, surname, description, image, nationality, dob, teams } =
     req.body;
   try {
      // Divide la cadena de equipos en un array
-     const teamNames = teams.split(",").map((teamName) => teamName.trim());
+     const teamNames = teams.split(",").map((teamName) => teamName);
 
      // Crea un array para almacenar los equipos creados o encontrados
      const teamsToAssociate = [];
@@ -40,7 +42,7 @@ const postDrivers = async (req, res) => {
         // Asocia los equipos al conductor
     await createDriver.addTeams(teamsToAssociate)
    
-    // Agrega un console.log para verificar los equipos asociados correctamente.
+    
     console.log("Equipos asociados al conductor:", teamsToAssociate);
 
 

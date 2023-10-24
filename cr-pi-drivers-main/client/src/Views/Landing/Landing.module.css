@@ -1,0 +1,28 @@
+.landing {
+    background-image: url("../../assets/formula1.png");
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.button{
+ /* Estilo del botón, como colores, tamaño de fuente, etc. */
+ background-color: #fff700;
+ color: rgb(4, 4, 4);
+ padding: 10px 20px;
+ border: none;
+ border-radius: 5px;
+ cursor:pointer;
+transform: translate(20px, 200px); /* para desplazar hacia abajo el boton*/
+
+ transition: background-color 0.3s ease; 
+}
+.button:hover{
+    background-color: #aa9811;
+
+}
