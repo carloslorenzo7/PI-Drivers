@@ -2,8 +2,9 @@ import axios from "axios";
 export const GET_DRIVERS = "GET_DRIVERS";
 export const GET_DETAILS = "GET_DETAILS";
 export const SEARCH_BY_NAME = "SEARCH_BY_NAME";
-export const SORT_DRIVERS_BY_NAME= "SORT_DRIVERS_BY_NAME"
-export const SORT_DRIVERS_BY_DATE="SORT_DRIVERS_BY_DATE"
+export const SORT_DRIVERS_BY_NAME = "SORT_DRIVERS_BY_NAME";
+export const SORT_DRIVERS_BY_DATE = "SORT_DRIVERS_BY_DATE";
+export const FILTER_BY_TEAM = "FILTER_BY_TEAM";
 
 export const getDrivers = () => {
   return async function (dispatch) {
@@ -51,14 +52,25 @@ export const searchByName = (name) => {
   };
 };
 
+export const sortDriversByName = (order) => {
+  return { type: "SORT_DRIVERS_BY_NAME", payload: order };
+};
 
-export const sortDriversByName= (order)=>{
-return{ type:"SORT_DRIVERS_BY_NAME", payload: order}
-  
-}
+export const sortDriversByDate = (order) => {
+  return { type: "SORT_DRIVERS_BY_DATE", payload: order };
+};
 
-export const sortDriversByDate= (order)=>{
-  return{ type:"SORT_DRIVERS_BY_DATE", payload: order}
-    
-  }
-
+export const filterByTeam = (teams) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios(`http://localhost:3001/teams=${teams}`);
+     // console.log("response:", response);
+      return dispatch({
+        type: "FILTER_BY_TEAM",
+        payload: response.data,
+      });
+    } catch (error) {
+      alert(error.message)
+    }
+  };
+};

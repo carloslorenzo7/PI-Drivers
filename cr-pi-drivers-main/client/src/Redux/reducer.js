@@ -5,7 +5,8 @@ const initialState = {
   allDriversCopy: [],
   details: [],
   searchDriver:[],
-  orderDrivers:[],
+  teamDriver:[],
+ 
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -54,6 +55,17 @@ const reducer = (state = initialState, { type, payload }) => {
             ? orderDriversByDate.sort((a, b) => a.dob.localeCompare(b.dob))
             : orderDriversByDate.sort((a, b) => b.dob.localeCompare(a.dob)),
           }
+
+          case "FILTER_BY_TEAM":
+            console.log("Caso FILTER_BY_TEAM ejecutado"); // Agrega este console.log
+          return{
+            ...state,
+            teamDriver: payload
+          }
+
+
+
+
 
     default:
       return { ...state };

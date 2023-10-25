@@ -5,7 +5,7 @@ const Card = ({ user }) => {
   return (
     <div className={style.Card}>
       <img src={user.image.url} />
-      <h3> Name: {user.name.forename} {user.name.surname}</h3>
+      <h3> Name: {user.name.surname} {user.name.forename} </h3>
       <div className={style.TeamContainer}>
         <h3>Team: {user.teams}</h3>
       </div>

@@ -20,9 +20,11 @@ const Home = () => {
   // ordenamiento de ascendente y descendete por nacimiento de redux(reducer)
   const orderDriversByDate = useSelector((state) => state.orderDriversByDate);
   
-
   
-
+// filtrado por team de redux
+  const teamDriver =useSelector((state)=> state.teamDriver);
+  console.log("Datos de equipos en el componente:", teamDriver); // Agrega este console.log
+ 
   //monto el componente cada vez que se actualiza la pagina
   useEffect(() => {
     dispatch(getDrivers());
@@ -41,6 +43,8 @@ const Home = () => {
     ? orderDriversByName
     : orderDriversByDate && orderDriversByDate.length > 0
     ? orderDriversByDate
+    :teamDriver && teamDriver.length > 0
+    ? teamDriver
     : allDrivers
 } />
     </div>
