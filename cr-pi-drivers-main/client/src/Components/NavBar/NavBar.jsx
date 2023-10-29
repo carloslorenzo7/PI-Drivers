@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "../../Components/SearchBar/SearchBar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
+  getDrivers,
   sortDriversByName,
   sortDriversByDate,
-  filterByTeam,
+  filterAllTeams,
+  filterTeams,
+  filterApiDb,
 } from "../../Redux/actions";
 import style from "./NavBar.module.css";
 
@@ -14,7 +17,13 @@ import style from "./NavBar.module.css";
 const NavBar = () => {
   const dispatch = useDispatch();
   // use state para manejar el estado del filtrado por team
-  const [selectTeam, setSelectTeam] = useState("All");
+  const [selectTeam, setSelectTeam] = useState("");
+  const teams = useSelector((state) => state.teams);
+  //console.log("teams de nav bar :", teams);
+
+  useEffect(() => {
+    dispatch(filterAllTeams());
+  }, [dispatch]);
 
   // manejador de evento de ordenamiento por nombre
   const handleNameSortChange = (event) => {
@@ -24,62 +33,105 @@ const NavBar = () => {
 
   // manejador de evento de ordenamiento por nacimiento
   const handleDateSortChange = (event) => {
-    console.log("Manejador de eventos handleTeamSortChange llamado"); // Agrega este console.log
     const sortOrder = event.target.value;
     dispatch(sortDriversByDate(sortOrder));
   };
 
-  // manejador de evento de ordenamiento por team
-  const handleTeamSortChange = (event) => {
-    const selectedTeam = event.target.value;
-    setSelectTeam(selectedTeam);
-    dispatch(filterByTeam(selectedTeam));
+  // manejador de evento de filtrado por team
+  const handleFilter = (event) => {
+    const selectedValue = event.target.value;
+    setSelectTeam(selectedValue);
+    console.log("selectTeam:", selectedValue); // Agrega este console.log
+    if (selectedValue === "All") {
+      dispatch(getDrivers());
+    } else {
+      dispatch(filterTeams(selectedValue));
+    }
   };
+
+  // Manejador de evento de filtrado api-db
+  const handleSourceFilter = (event) => {
+    const selectedValue = event.target.value;
+    setSelectTeam(selectedValue);
+    if (selectedValue === "All") {
+      dispatch(filterApiDb("All"));
+    } else if (selectedValue === "api") {
+      dispatch(filterApiDb("api"));
+    } else if (selectedValue === "database") {
+      dispatch(filterApiDb("database"));
+    }
+  };
+
   return (
     <div className={style.container}>
       <Link to="/home">Home</Link>
       <Link to="/create">Form</Link>
       <SearchBar />
-      {/* ---------------------------------------------------------------------------------------- */}
-      <label htmlFor="sortSelect">Order Drivers By Name</label>
+
+      {/* --------------order name------------------------------------------------------------------- */}
+      {/* <label htmlFor="sortSelect">Order Drivers By Name</label> */}
       <select id="sortSelect" onChange={handleNameSortChange} value="Order">
         <option value="Order" disabled>
-          {" "}
-          Order
+          Order Name
         </option>
         <option value="A">Ascending</option>
         <option value="D">Descending</option>
       </select>
-      {/* ------------------------------------------------------------------------------- */}
+      {/* --------------------order dob----------------------------------------------------------- */}
 
-      <label htmlFor="sortSelect">Order Drivers By Date</label>
+      {/* <label htmlFor="sortSelect">Order Drivers By Date</label> */}
       <select id="sortSelect" onChange={handleDateSortChange} value="Order">
         <option value="Order" disabled>
-          Order
+          Order Dob
         </option>
         <option value="A">Ascending</option>
         <option value="D">Descending</option>
       </select>
-      {/* -------------------------------------------------------------------------------- */}
 
+      {/* -----------------------filter team --------------------------------------------------------- */}
 
-      <label htmlFor="teamSelect">Select Team</label>
-      <select
-        id="teamSelect"
-        onChange={handleTeamSortChange}
-        value={selectTeam}
-      >
-        <option value="All">All</option>
-        <option value="McLaren">McLaren</option>
-        <option value="Mercedes">Mercedes</option>
-        <option value="Williams">Williams</option>
-        <option value="Ferrari">Ferrari</option>
-        <option value="Alfa Romeo">Alfa Romeo</option>
-        <option value="Honda">Honda</option>
-        <option value="Maserati">Maserati</option>
-        <option value="Aston Martin">Aston Martin</option>
-        <option value="Alpine">Alpine</option>
+      <select onChange={(event) => handleFilter(event)} value={selectTeam}>
+        <option value="All">Filter by Team...</option>
+
+        {teams.map((team, index) => (
+          <option key={index} value={team.name}>
+            {team}
+          </option>
+        ))}
       </select>
+
+      {/* --------------------------------filter api-db---------------------------------------------------------------------- */}
+
+      <span>Filter by Source</span>
+      <label>
+        <input
+          type="radio"
+          value="All"
+          checked={selectTeam === "All"}
+          onChange={handleSourceFilter}
+        />
+        All
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          value="database"
+          checked={selectTeam === "database"}
+          onChange={handleSourceFilter}
+        />
+        Database
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          value="api"
+          checked={selectTeam === "api"}
+          onChange={handleSourceFilter}
+        />
+        Api
+      </label>
     </div>
   );
 };

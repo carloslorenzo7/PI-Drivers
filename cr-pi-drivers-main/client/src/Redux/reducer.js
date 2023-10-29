@@ -5,8 +5,9 @@ const initialState = {
   allDriversCopy: [],
   details: [],
   searchDriver:[],
-  teamDriver:[],
- 
+  teams:[],
+ driverFiltered:[],
+ driversApiDb: [],
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -56,16 +57,46 @@ const reducer = (state = initialState, { type, payload }) => {
             : orderDriversByDate.sort((a, b) => b.dob.localeCompare(a.dob)),
           }
 
-          case "FILTER_BY_TEAM":
-            console.log("Caso FILTER_BY_TEAM ejecutado"); // Agrega este console.log
+          case "FILTER_ALL_TEAMS":
+           
           return{
             ...state,
-            teamDriver: payload
-          }
+            teams: payload
+          };
 
+          case "FILTER_TEAMS":
+            const drivers= [...state.allDriversCopy]
+            // Declaro driverTeams aquí
+             let driverTeams;
 
+            driverTeams= payload === "All"
+            ?drivers
+            :drivers.filter((driver)=>driver.teams && driver.teams.includes(payload));
+            console.log("driversTeam:", driverTeams );
+            return{
+              ...state,
+              drivers: driverTeams,
+              driversFiltered:driverTeams
+            }
 
+          case "FILTER_API_DB":
+            const copyApiDb= [...state.allDriversCopy];
 
+            let driversCopyDb;
+
+            driversCopyDb = payload ==="database"
+            
+            // filtro los drivers que tengan la propiedad createDb
+            ? copyApiDb.filter((driver)=>driver.createDb)
+              // filtro los drivers que no tengan la propiedad createDb
+            :copyApiDb. filter((driver)=> !driver.createDb)
+            console.log("Payload:", payload); // Agrega este console.log para verificar el valor de payload
+            console.log("driversCopyDb:", driversCopyDb); // Agrega este console.log para verificar driversCopyDb
+            return{
+              ...state,
+              drivers: payload === "All"? copyApiDb : driversCopyDb,
+              driverFiltered: driversCopyDb 
+            };
 
     default:
       return { ...state };

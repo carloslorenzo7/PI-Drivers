@@ -21,7 +21,8 @@ const getTeams = async (req, res) => {
   // const uniqueTeamsSet = [...uniqueTeams];
 
    // Almacena los nombres de equipos únicos en la base de datos
-   await Team.bulkCreate(uniqueTeams.map((name) => ({ name: name })));
+   await Team.bulkCreate(uniqueTeams.map((name) => ({ name: name })), { ignoreDuplicates: true });
+   
     res.status(200).json(uniqueTeams);
 
 

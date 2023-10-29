@@ -40,6 +40,12 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+
+      createDb: {
+        type: DataTypes.STRING,
+        defaultValue: true,
+        allowNull: false,
+      },
     },
     {
       timestamps: false,
