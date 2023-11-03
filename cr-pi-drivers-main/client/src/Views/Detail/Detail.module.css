@@ -1,47 +1,62 @@
 .detail {
-    
-    display: flex;
+  display: flex;
   align-items: center;
   font-family: sans-serif;
   border: 2px solid #646cffaa;
   border-radius: 8px;
   padding: 10px;
-  margin: 1px;
+  margin: 50px;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.4);
   background-color: #171414;
-  gap: 30px; /* Espacio entre la imagen y los detalles */
-    
+  gap: 30px; 
+  overflow: hidden; 
 }
 
-/* Estilo para el contenedor de detalles del conductor */
-/* Estilo para el contenedor de columnas de detalles */
-.detailColumn {
-    flex: 1;
-    padding: 10px; /* Espaciado interior */
-  color: #ffffff; /* Texto blanco */
-  }
-  
-  /* Estilos para los elementos dentro del contenedor de columnas de detalles */
-  .detailColumn h2 {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  .detailColumn h4 {
-    font-size: 16px;
-  }
-.img{
-    max-width: 100%; /* Asegura que la imagen no se desborde */
-   width: auto;
-   height: auto;
+.background {
+  background-image: url('../../assets/fondo.jpg'); /* Ruta a tu imagen de fondo */
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  filter: blur(3px); /* Aplica el efecto de desenfoque */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
+
+.detailColumn {
+  flex: 1;
+  padding: 10px; 
+  color: #ffffff; 
+}
+
+/* Estilos para los elementos dentro del contenedor de columnas de detalles */
+.detailColumn h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.detailColumn h4 {
+  font-size: 16px;
+}
+
+.img {
+  
+   width: auto;
+  height: auto; 
+  margin-right: 20px
+}
+
 /* Estilo para hacer la imagen redonda */
 .img img {
-    border-radius: 10%;
-  }
-  
-  /* Estilo para añadir una transición suave en la imagen */
-  .img img:hover {
-    transform: scale(1.1); /* Aumenta un 10% en tamaño al pasar el mouse */
-    transition: transform 0.3s ease; /* Transición suave durante 0.3 segundos */
-  }
+  border-radius: 10%;
+  max-width: 300px; 
+}
+
+/* Estilo para añadir una transición suave en la imagen */
+.img img:hover {
+  transform: scale(1.1); 
+  transition: transform 0.3s ease; 
+}

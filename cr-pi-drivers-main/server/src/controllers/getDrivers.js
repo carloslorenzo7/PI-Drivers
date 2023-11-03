@@ -4,7 +4,7 @@ const {defaultImage} = require("../utils/defaultImage.js")
 
 const getDrivers = async (req, res) => {
   try {
-    //solicitud a api para obetner todos los drivers y caracteristicas
+    
     const response = await axios.get("http://localhost:5000/drivers");
     driversData = response.data;
 

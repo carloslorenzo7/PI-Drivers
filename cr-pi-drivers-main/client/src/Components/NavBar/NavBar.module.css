@@ -1,26 +1,57 @@
 .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-  }
-  
-  a {
-    color: #fff;
-    text-decoration: none;
-    margin-right: 10px;
-  }
-  
-  select {
-    padding: 5px;
-    border: none;
-    background-color: #444;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  label {
-    margin-right: 10px;
-  }
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  align-items: center;
+ 
+}
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.nav a:hover {
+  color: #646cff;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+}
+
+select {
+  padding: 5px;
+  border: none;
+  background-color: #444;
+  color: #fff;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+label {
+  margin-right: 10px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 80px; 
+  height: auto; 
+  margin-right: 10px; 
+}

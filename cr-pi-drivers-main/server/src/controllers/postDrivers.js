@@ -3,8 +3,12 @@ const { Driver, Team } = require("../db");
 
 
 const postDrivers = async (req, res) => {
-  const { forename, surname, description, image, nationality, dob, teams } =
-    req.body;
+  const { forename, surname, description, image, nationality, dob, teams } = req.body;
+
+
+
+
+
   try {
      // Divide la cadena de equipos en un array
      const teamNames = teams.split(",").map((teamName) => teamName);
@@ -31,10 +35,10 @@ const postDrivers = async (req, res) => {
     const createDriver = await Driver.create({
       forename,
       surname,
-      description,
-      image,
       nationality,
       dob,
+      image,
+      description,
     });
 
 

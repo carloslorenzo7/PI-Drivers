@@ -16,7 +16,7 @@ function App() {
      return (
     <div>
        { /*  location.pathname para omitir la nav bar en el landing y que aparerezca en el resto de las pestañas*/ }
-       {location.pathname !== "/" && <NavBar/>} 
+       {location.pathname !== "/"  && <NavBar/>} 
       <Routes>
         <Route path="/" element={<Landing/>}/>
         <Route path="/home" element={<Home/>}/>
