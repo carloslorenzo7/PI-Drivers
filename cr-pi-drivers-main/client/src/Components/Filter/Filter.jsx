@@ -12,7 +12,7 @@ const Filter = () => {
   // use state para manejar el estado del filtrado por team
   const [selectTeam, setSelectTeam] = useState("");
   const teams = useSelector((state) => state.teams);
-  //console.log("teams de nav bar :", teams);
+
 
   useEffect(() => {
     dispatch(filterAllTeams());
@@ -22,7 +22,7 @@ const Filter = () => {
   const handleFilter = (event) => {
     const selectedValue = event.target.value;
     setSelectTeam(selectedValue);
-    console.log("selectTeam:", selectedValue); // Agrega este console.log
+  
     if (selectedValue === "All") {
       dispatch(getDrivers());
     } else {

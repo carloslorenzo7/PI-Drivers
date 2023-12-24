@@ -5,8 +5,9 @@ export const SEARCH_BY_NAME = "SEARCH_BY_NAME";
 export const SORT_DRIVERS_BY_NAME = "SORT_DRIVERS_BY_NAME";
 export const SORT_DRIVERS_BY_DATE = "SORT_DRIVERS_BY_DATE";
 export const FILTER_ALL_TEAMS = "FILTER_ALL_TEAMS";
-export const FILTER_TEAMS="FILTER_TEAMS";
-export const FILTER_API_DB= "FILTER_API_DB";
+export const FILTER_TEAMS = "FILTER_TEAMS";
+export const FILTER_API_DB = "FILTER_API_DB";
+
 
 export const getDrivers = () => {
   return async function (dispatch) {
@@ -66,31 +67,43 @@ export const filterAllTeams = () => {
   return async function (dispatch) {
     try {
       const teams = await axios(`http://localhost:3001/teams`);
-      //console.log("teams:", teams); //llega ok 
+      //console.log("teams:", teams); //llega ok
       return dispatch({
         type: "FILTER_ALL_TEAMS",
         payload: teams.data,
       });
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
   };
 };
 
-export const filterTeams= (payload)=>{
-  
-  return{
-    type:"FILTER_TEAMS" ,
-    payload
-  }
-}
-
-
-export const filterApiDb =(payload) =>{
-
-  return{
-    type: "FILTER_API_DB",
+export const filterTeams = (payload) => {
+  return {
+    type: "FILTER_TEAMS",
     payload,
   };
+};
 
+
+
+export const filterApiDb = (selectedOption) => {
+  return async function (dispatch) {
+    try {
+      const dataApiDb= await axios("http://localhost:3001/drivers")
+     
+
+       
+
+      return dispatch({
+        type: "FILTER_API_DB",
+        payload: {
+          dataApiDb: dataApiDb.data,
+          selectedOption: selectedOption,
+        },
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 };

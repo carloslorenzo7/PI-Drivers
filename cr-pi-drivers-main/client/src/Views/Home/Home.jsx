@@ -11,7 +11,7 @@ const Home = () => {
   const allDrivers = useSelector((state) => state.allDrivers);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9; // cantidad de drivers que se va a mostrar por página
+  const itemsPerPage = 9; 
   const totalDrivers = allDrivers.length;
   
 

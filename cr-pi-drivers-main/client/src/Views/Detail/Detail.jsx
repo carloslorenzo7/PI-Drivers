@@ -19,7 +19,7 @@ const Detail = () => {
     <div className={style.detail}>
       <div className={style.background}></div>
     <div className={style.img}>
-      <img  src={details.image? details.image.url:"../../../../server/src/images/cocheF1.jpg"} alt="Driver" />
+    <img src={details.image && details.image.url ? details.image.url : details.image || "../../../../server/src/images/cocheF1.jpg"} alt="Driver" />
     </div>
     <div className={style.detailColumn}>
       <h2>

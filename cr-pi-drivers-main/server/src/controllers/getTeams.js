@@ -17,9 +17,7 @@ const getTeams = async (req, res) => {
    // Filtra y elimina valores nulos, 'null' y duplicados
    const uniqueTeams = [...new Set(apiTeams.filter(team => team).flat())];
 
-  // // Convierte el Set en un arreglo
-  // const uniqueTeamsSet = [...uniqueTeams];
-
+  
    // Almacena los nombres de equipos únicos en la base de datos
    await Team.bulkCreate(uniqueTeams.map((name) => ({ name: name })), { ignoreDuplicates: true });
    

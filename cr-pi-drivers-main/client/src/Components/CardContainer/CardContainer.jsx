@@ -24,18 +24,4 @@ const CardContainer = () => {
   );
 };
 
-// const CardContainer = ({ allDrivers, searchDriver }) => {
-
-//   return (
-
-//     <div className={style.driverContainer}>
-
-//              {searchDriver
-//                ? searchDriver.map((user) => <Card key={user.id} user={user} />)
-//               : allDrivers.map((user) => <Card key={user.id} user={user} />)}
-
-//     </div>
-//   );
-// };
-
 export default CardContainer;

@@ -1,16 +1,14 @@
-
 import { useState } from "react";
-import { useSelector ,useDispatch } from "react-redux";
-import axios from "axios"
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 import { getDrivers } from "../../Redux/actions";
-import style from "./Form.module.css"
-
+import style from "./Form.module.css";
+//! revisar funcinamiento
 
 const Form = () => {
   const teams = useSelector((state) => state.teams);
-  const dispatch= useDispatch()
+  const dispatch = useDispatch();
   const [isValid, setIsValid] = useState(false);
-
 
   const [form, setForm] = useState({
     forename: "",
@@ -35,7 +33,6 @@ const Form = () => {
   const validate = (form) => {
     let newErrors = {};
 
-
     if (!/^[A-Za-z\s]+$/.test(form.forename)) {
       newErrors.forename = "Invalid Forename";
     }
@@ -57,19 +54,20 @@ const Form = () => {
       form.image =
         "https://s1.eestatic.com/2020/09/02/deportes/motor/deportes-deportes_de_motor-motor_517709501_158978197_1706x960.jpg";
     } else if (
-      !/(https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-/]))?/.test(form.image )
+      !/(https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-/]))?/.test(
+        form.image
+      )
     ) {
       newErrors.image = "Enter a valid URL";
     }
 
     if (form.description.length < 5 || form.description.length > 250) {
       newErrors.description =
-      "The description must be between 5 and 250 characters";
+        "The description must be between 5 and 250 characters";
     }
 
     setIsValid(Object.keys(newErrors).length === 0);
-  
-    
+
     setErrors(newErrors);
     return newErrors;
   };
@@ -85,25 +83,45 @@ const Form = () => {
     setForm({ ...form, [property]: value });
   };
 
+  const [selectedTeam, setSelectedTeam] = useState([]);
 
-  const [selectedTeam, setSelectedTeam]= useState([])
+  const selectTeamHandler = (event) => {
+    //const property = event.target.name;
 
-  const selectTeamHandler= (event) =>{
-    const selected = event.target.value 
-    if(selectedTeam.length < 3 && !selectedTeam.includes(selected)){
-      setSelectedTeam([...selectedTeam,selected])
+    /// ! ver lia de error
+
+    const selected = event.target.value;
+
+    if (selectedTeam.length < 3 && !selectedTeam.includes(selected)) {
+      setSelectedTeam([...selectedTeam, selected]);
+
+      //setForm({ ...form, [property]: selected})
+      //setForm({...form, teams: [...form.teams ,selected]})
+
+     //? Actualiza el array de equipos en el estado form
+    setForm((prevForm) => ({ ...prevForm, teams: [...prevForm.teams, selected] }));
+
+      console.log("setSelectedTeam:", setSelectedTeam);
+      console.log("setForm:", setForm);
+
+      // }
+    } else {
+      alert(
+        "Lo sentimos, ya has seleccionado el límite de 3 equipos. Por favor, deselecciona alguno antes de continuar."
+      );
     }
-  }
+  };
 
-  const deleteTeamHandler= (team)=>{
-    const updateTeams= selectedTeam.filter((selectedTeam)=> selectedTeam !== team)
-    setSelectedTeam(updateTeams)
+  const deleteTeamHandler = (team) => {
+    const updateTeams = selectedTeam.filter(
+      (selectedTeam) => selectedTeam !== team
+    );
+    setSelectedTeam(updateTeams);
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
     console.log("Submit button clicked");
-
 
     if (selectedTeam.length === 0) {
       setErrors({ ...errors, teams: "Select at least one team" });
@@ -111,17 +129,24 @@ const Form = () => {
       return;
     }
 
+    const formErrors = validate(form); // linea comentada
+    console.log(form);
 
-
-
-    const formErrors = validate(form);
     if (Object.keys(formErrors).length === 0) {
+      // linea comentada
       axios
-      .post("http://localhost:3001/drivers", form)
-      .then(() => {
-          
+        .post("http://localhost:3001/drivers", {
+          forename:form.forename,
+          surname: form.surname,
+          nationality: form.nationality,
+          dob: form.dob,
+          image: form.image,
+          description: form.description,
+          teams: form.teams.join(','), // Asegúrate de que esta línea incluya todos los equipos seleccionados
+        })
+        .then(() => {
           alert("Driver created successfully");
-          
+
           // Restablece el formulario
           setForm({
             forename: "",
@@ -132,7 +157,7 @@ const Form = () => {
             description: "",
             teams: [],
           });
-  
+
           // Restablece los errores
           setErrors({
             forename: "",
@@ -143,16 +168,17 @@ const Form = () => {
             description: "",
             teams: "",
           });
-          
-          // despacho la accion para actualizar la lista de conductores 
+
+          // despacho la accion para actualizar la lista de conductores
+          //!ver esta linea
           dispatch(getDrivers());
         })
         .catch((error) => {
           console.error("Error creating driver:", error);
           alert("Error creating driver. Please try again.");
-          
         });
-    }else {
+    } else {
+      // else comentado
       setErrors(formErrors);
     }
   };
@@ -229,26 +255,25 @@ const Form = () => {
           multiple
         >
           {teams.map((team, index) => (
-            <option key={index} value={team.name}>
+            <option key={index} value={team}>
               {team}
             </option>
           ))}
         </select>
         <span>{errors.teams}</span>
         <div className="selectTeam">
-            {selectedTeam.map((team ,index)=>(
-              <div key={index} className="deleteTeam">
-                {team}
+          {selectedTeam.map((team, index) => (
+            <div key={index} className="deleteTeam">
+              {team}
 
               <button onClick={() => deleteTeamHandler(team)}>x</button>
-
-              </div>
-              
-            ))}
-
+            </div>
+          ))}
         </div>
       </div>
-      <button type="submit" disabled={!isValid}>Create Driver </button>
+      <button type="submit" disabled={!isValid}>
+        Create Driver{" "}
+      </button>
     </form>
   );
 };

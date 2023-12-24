@@ -11,6 +11,12 @@ module.exports = (sequelize) => {
         primaryKey: true,
         allowNull: false,
       },
+      // name: {
+      //   type: DataTypes.JSONB, 
+      //   allowNull: false,
+      // },
+
+      
       forename: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -39,7 +45,10 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-
+      source: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       
     },
     {
