@@ -38,16 +38,16 @@ const Form = () => {
     }
 
     if (!/^[A-Za-z\s]+$/.test(form.surname)) {
-      newErrors.surname = "Invalid surname";
+      newErrors.surname = "Invalid Surname";
     }
 
     if (!/^[A-Za-z\s]+$/.test(form.nationality)) {
-      newErrors.nationality = "Invalid nationality";
+      newErrors.nationality = "Invalid Nationality";
     }
 
     if (!/^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(form.dob)) {
       console.log("Fecha no válida:", form.dob);
-      newErrors.dob = "Invalid dob";
+      newErrors.dob = "Invalid Dob";
     }
 
     if (!form.image) {
@@ -72,6 +72,18 @@ const Form = () => {
     return newErrors;
   };
 
+ //? para el efecto de que quede fijo el label cuando completo el input 
+  const [inputValues, setInputValues] = useState({
+    forename: "",
+    surname: "",
+    nationality: "",
+    dob: "",
+    image: "",
+    description: "",
+  });
+
+
+
   const changeHandler = (event) => {
     const property = event.target.name;
     const value = event.target.value;
@@ -81,6 +93,9 @@ const Form = () => {
 
     // copia del objeto, [property]: propiedad que quiero modificar , value: el valor que le quiero dar
     setForm({ ...form, [property]: value });
+
+     // Actualiza el objeto de valores de entrada
+  setInputValues({ ...inputValues, [property]: value });
   };
 
   const [selectedTeam, setSelectedTeam] = useState([]);
@@ -98,8 +113,11 @@ const Form = () => {
       //setForm({ ...form, [property]: selected})
       //setForm({...form, teams: [...form.teams ,selected]})
 
-     //? Actualiza el array de equipos en el estado form
-    setForm((prevForm) => ({ ...prevForm, teams: [...prevForm.teams, selected] }));
+      //? Actualiza el array de equipos en el estado form
+      setForm((prevForm) => ({
+        ...prevForm,
+        teams: [...prevForm.teams, selected],
+      }));
 
       console.log("setSelectedTeam:", setSelectedTeam);
       console.log("setForm:", setForm);
@@ -136,13 +154,13 @@ const Form = () => {
       // linea comentada
       axios
         .post("http://localhost:3001/drivers", {
-          forename:form.forename,
+          forename: form.forename,
           surname: form.surname,
           nationality: form.nationality,
           dob: form.dob,
           image: form.image,
           description: form.description,
-          teams: form.teams.join(','), // Asegúrate de que esta línea incluya todos los equipos seleccionados
+          teams: form.teams.join(","), // Asegúrate de que esta línea incluya todos los equipos seleccionados
         })
         .then(() => {
           alert("Driver created successfully");
@@ -184,75 +202,90 @@ const Form = () => {
   };
 
   return (
-    //el submit handler es disparado desde el form
+    <div className={style.formContainer}>
+    {/* el submit handler es disparado desde el form */}
     <form onSubmit={submitHandler} className={style.form}>
-      <div>
-        <label>forename</label>
+      <div className={`${style.inputContainer} ${inputValues.forename.trim() && style.hasValue}`}>
         <input
           type="text"
           value={form.forename}
           onChange={changeHandler}
           name="forename"
+          className={style.input}
         />
+        <div className={style.cut}></div>
+        <label className={style.iLabel}>Forename</label>
         <span>{errors.forename}</span>
       </div>
-      <div>
-        <label>surname</label>
+      <div className={`${style.inputContainer} ${inputValues.surname.trim() && style.hasValue}`}>
         <input
           type="text"
           value={form.surname}
           onChange={changeHandler}
           name="surname"
+          className={style.input}
         />
+        <div className={style.cut}></div>
+        <label className={style.iLabel}>Surname</label>
         <span>{errors.surname}</span>
       </div>
-      <div>
-        <label>nationality</label>
+      <div className={`${style.inputContainer} ${inputValues.nationality.trim() && style.hasValue}`}>
         <input
           type="text"
           value={form.nationality}
           onChange={changeHandler}
           name="nationality"
+          className={style.input}
         />
+        <div className={style.cut}></div>
+        <label className={style.iLabel}>Nationality</label>
         <span>{errors.nationality}</span>
       </div>
-      <div>
-        <label>dob</label>
+      <div className={`${style.inputContainer} ${inputValues.dob.trim() && style.hasValue}`}>
         <input
           type="text"
           value={form.dob}
           onChange={changeHandler}
           name="dob"
+          className={style.input}
+          
         />
+        <div className={style.cut}></div>
+        <label className={style.iLabel}>Dob</label>
         <span>{errors.dob}</span>
       </div>
-      <div>
-        <label>image</label>
+      <div className={`${style.inputContainer} ${inputValues.image.trim() && style.hasValue}`}>
         <input
           type="url"
           value={form.image}
           onChange={changeHandler}
           name="image"
+          className={style.input}
         />
+        <div className={style.cut}></div>
+        <label className={style.iLabel}>Image</label>
         <span>{errors.image}</span>
       </div>
-      <div>
-        <label>description</label>
-        <input
+      <div className={`${style.inputContainer} ${inputValues.description.trim() && style.hasValue} ${style.textArea}`}>
+        <textarea
           type="text"
           value={form.description}
           onChange={changeHandler}
           name="description"
+          className={style.input}
         />
+        <div className={style.cut}></div>
+        <label className={style.iLabel}>Description</label>
         <span>{errors.description}</span>
       </div>
       <div className={style.teams}>
-        <label>teams</label>
+        <label>Teams</label>
         <select
           value={selectedTeam}
           onChange={selectTeamHandler}
           name="teams"
           multiple
+          className={style.input}
         >
           {teams.map((team, index) => (
             <option key={index} value={team}>
@@ -263,18 +296,19 @@ const Form = () => {
         <span>{errors.teams}</span>
         <div className="selectTeam">
           {selectedTeam.map((team, index) => (
-            <div key={index} className="deleteTeam">
+            <div key={index} className={style.deleteTeam}>
               {team}
 
-              <button onClick={() => deleteTeamHandler(team)}>x</button>
+              <button  className={style.deleteButton} onClick={() => deleteTeamHandler(team)}>x</button>
             </div>
           ))}
         </div>
       </div>
-      <button type="submit" disabled={!isValid}>
+      <button className={style.button} type="submit" disabled={!isValid}>
         Create Driver{" "}
       </button>
     </form>
+    </div>
   );
 };
 export default Form;

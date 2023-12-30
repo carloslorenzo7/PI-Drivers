@@ -1,12 +1,15 @@
 .container {
-  width: 100%;
-  background-color: #333;
+  width: 105%;
+  background-color: #2e1b1b3e;
   color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  margin:auto; /* Esto centrará la barra de navegación */
 }
+
+
 
 .nav {
   flex: 1;
@@ -15,10 +18,11 @@
  
 }
 
+
 .nav a {
   color: #fff;
   text-decoration: none;
-  margin: 0 10px;
+  margin: 0 15px;
   font-weight: bold;
   transition: color 0.3s;
 }
@@ -30,15 +34,22 @@
 .controls {
   display: flex;
   align-items: center;
+  margin-right: 10px; /* Agregado para espaciado uniforme */
+ 
+  
 }
 
-select {
+.controls select {
   padding: 5px;
-  border: none;
-  background-color: #444;
-  color: #fff;
+  border: 1px solid #555; /* Cambia el borde */
+  border-radius: 4px; /* Hace las esquinas más redondeadas */
+  background-color: #201b23; /* Cambia el color de fondo */
+  color: #fff; /* Cambia el color del texto */
   cursor: pointer;
   margin-right: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Agrega una sombra sutil */
+  background-image: linear-gradient(to bottom, #2a2a2a 50%, transparent 50%);
+ 
 }
 
 label {

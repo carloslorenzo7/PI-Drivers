@@ -17,7 +17,6 @@ const NavBar = () => {
         </div>
       <Link to="/home">Home</Link>
       <Link to="/create">Form</Link>
-      </nav>
 
       <div className={style.controls}>
       <SearchBar />
@@ -26,6 +25,7 @@ const NavBar = () => {
 
       </div>
 
+      </nav>
       
     </div>
   );
