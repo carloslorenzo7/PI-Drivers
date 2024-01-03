@@ -1,10 +1,11 @@
 const axios = require("axios");
 const {Team}= require("../db")
 
-apiUrl = "http://localhost:5000/drivers";
+
+const API_BASE_URL = process.env.API_BASE_URL;
 const getTeams = async (req, res) => {
   try {
-    const response = await axios.get(`${apiUrl}`);
+    const response = await axios.get(`${API_BASE_URL}/drivers`);
     const dataApi = response.data;
 
     

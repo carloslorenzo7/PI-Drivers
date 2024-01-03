@@ -2,6 +2,7 @@ const axios = require("axios");
 const { defaultImage } = require("../utils/defaultImage.js");
 const { Driver, Team } = require("../db.js");
 const { formatDataBD } = require("../utils/formatDataBD/formatDataBD.js");
+const API_BASE_URL = process.env.API_BASE_URL;
 
 const getDriversId = async (req, res) => {
   try {
@@ -11,7 +12,7 @@ const getDriversId = async (req, res) => {
 
     // si el numero es entero, buscaría en la api
     if (Number.isInteger(Number(id))) {
-      response = await axios.get(`http://localhost:5000/drivers/${id}`);
+      response = await axios.get(`${API_BASE_URL}/drivers/${id}`);
     } else {
       // si el numero no es entero busca en la base de datos
       const dbDriver = await Driver.findByPk(id, {

@@ -2,6 +2,8 @@ const axios = require("axios");
 const { defaultImage } = require("../utils/defaultImage.js");
 const {formatDataBD} = require("../utils/formatDataBD/formatDataBD.js");
 const { Driver, Team, TeamDriver } = require("../db");
+const API_BASE_URL = process.env.API_BASE_URL;
+
 
 const getDrivers = async (req, res) => {
   try {
@@ -17,7 +19,7 @@ const getDrivers = async (req, res) => {
     });
 
     //busco drivers en la api
-    const response = await axios.get("http://localhost:5000/drivers");
+    const response = await axios.get(`${API_BASE_URL}/drivers`);
     driversApi = response.data;
 
     // mapeo y assigno la funcion defaultImage a cada conductor que no tenga imagen

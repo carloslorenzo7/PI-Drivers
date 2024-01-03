@@ -1,16 +1,18 @@
 const axios = require("axios");
-apiUrl = "http://localhost:5000/drivers";
+
 LIMIT = 15;
 const { Driver, Team } = require("../db");
 const { Op } = require("sequelize");
 const { defaultImage } = require("../utils/defaultImage.js");
+
+const API_BASE_URL = process.env.API_BASE_URL; 
 
 const getDriverName = async (req, res) => {
   try {
     //solicito por query
     const { name } = req.query;
     // hago solicitud a la api
-    const response = await axios.get(`${apiUrl}`);
+    const response = await axios.get(`${API_BASE_URL}/drivers`);
     const apiData = response.data;
   
 

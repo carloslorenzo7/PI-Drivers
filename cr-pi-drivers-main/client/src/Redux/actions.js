@@ -12,7 +12,7 @@ export const FILTER_API_DB = "FILTER_API_DB";
 export const getDrivers = () => {
   return async function (dispatch) {
     try {
-      const dataDrivers = await axios("http://localhost:3001/drivers");
+      const dataDrivers = await axios("/drivers");
       return dispatch({
         type: "GET_DRIVERS",
         payload: dataDrivers.data,
@@ -26,7 +26,7 @@ export const getDrivers = () => {
 export const getDetails = (id) => {
   return async function (dispatch) {
     try {
-      const detailData = await axios(`http://localhost:3001/drivers/${id}`);
+      const detailData = await axios(`/drivers/${id}`);
       console.log("Detalles de la API:", detailData);
       return dispatch({
         type: "GET_DETAILS",
@@ -42,7 +42,7 @@ export const searchByName = (name) => {
   return async function (dispatch) {
     try {
       const response = await axios(
-        `http://localhost:3001/drivers/name?name=${name}`
+        `/drivers/name?name=${name}`
       );
       console.log("Detalles de la API:", response.data);
       return dispatch({
@@ -66,7 +66,7 @@ export const sortDriversByDate = (order) => {
 export const filterAllTeams = () => {
   return async function (dispatch) {
     try {
-      const teams = await axios(`http://localhost:3001/teams`);
+      const teams = await axios(`/teams`);
       //console.log("teams:", teams); //llega ok
       return dispatch({
         type: "FILTER_ALL_TEAMS",
@@ -90,7 +90,7 @@ export const filterTeams = (payload) => {
 export const filterApiDb = (selectedOption) => {
   return async function (dispatch) {
     try {
-      const dataApiDb= await axios("http://localhost:3001/drivers")
+      const dataApiDb= await axios("/drivers")
      
 
        
