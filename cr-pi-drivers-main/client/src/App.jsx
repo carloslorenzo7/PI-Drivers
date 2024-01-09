@@ -9,7 +9,11 @@ import Detail from "./Views/Detail/Detail";
 import Form from "./Views/Form/Form";
 import axios from "axios";
 
-axios.defaults.baseURL= 'http://localhost:3001/'
+//?asi estaba por defecto 
+//axios.defaults.baseURL= 'http://localhost:3001/'
+
+// el deploy de render
+axios.defaults.baseURL= 'https://pi-drivers-lr27.onrender.com'
 
 
 // defino las rutas para las vistas principales 
