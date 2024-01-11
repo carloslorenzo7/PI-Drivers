@@ -1,0 +1,6 @@
+{
+    "rewrites": [
+      { "source": "/api/(.*)", "destination": "https://pi-drivers-lr27.onrender.com" },
+      { "source": "/(.*)", "destination": "/index.html" }
+    ]
+  }
