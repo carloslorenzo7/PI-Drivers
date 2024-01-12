@@ -13,7 +13,7 @@ import axios from "axios";
 //axios.defaults.baseURL= 'http://localhost:3001/'
 
 // el deploy de render
-axios.defaults.baseURL= 'https://pi-drivers-lr27.onrender.com'
+axios.defaults.baseURL= 'https://pi-drivers-lr27.onrender.com';
 
 
 // defino las rutas para las vistas principales 
