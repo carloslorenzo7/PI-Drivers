@@ -15,6 +15,8 @@ import axios from "axios";
 // el deploy de render
 axios.defaults.baseURL= 'https://pi-drivers-lr27.onrender.com'
 
+// deploy del back para que ande el form 
+axios.defaults.baseURL = 'https://pi-drivers-lr27.onrender.com';
 
 // defino las rutas para las vistas principales 
 function App() {
